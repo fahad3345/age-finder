@@ -1,0 +1,50 @@
+from tkinter import *
+import datetime
+window=Tk()
+window.geometry('300x300')
+window.title('Age finder')
+window.configure(bg='Ivory')
+l0=Label(window,text='AGE FINDER',font=('Italic',19),bg='Ivory')
+l0.place(x=80,y=7)
+l2=Label(window,text='Date Of Birth:',fg='white',bg='black')
+l2.place(x=5,y=50)
+day=range(1,32)
+var1=StringVar(value='Day')
+var1.set(day[0])
+o1=OptionMenu(window,var1,*day)
+o1.configure(width=3,fg='white',bg='black')
+o1.place(x=85,y=45)
+month=range(1,13)
+var2=IntVar(value='Month')
+var2.set(month[0])
+o2=OptionMenu(window,var2,*month)
+o2.configure(width=5,bg='black',fg='white')
+o2.place(x=150,y=45)
+year=range(1990,2010)
+var3=IntVar(value='Year')
+var3.set(year[0])
+o3=OptionMenu(window,var3,*year)
+o3.configure(width=4,fg='white',bg='black')
+o3.place(x=230,y=45)
+def age():
+    tday=datetime.date.today().day
+    tmonth=datetime.date.today().month
+    tyear=datetime.date.today().year
+    bday=int(var1.get())
+    bmonth=int(var2.get())
+    byear=int(var3.get())
+    mlist=[31,28,31,30,31,30,31,31,30,31,30,31]
+    if(bday>tday):
+        tmonth-=1
+        tday+=mlist[tmonth-1]
+    if(bmonth>tmonth):
+        tyear-=1
+        tmonth+=12
+    difday=str(tday-bday)
+    difmonth=str(tmonth-bmonth)
+    difyear=str(tyear-byear)
+    l3=Label(window,text='Age : '+difyear+'  Years  '+difmonth+'  Months   '+difday+'  Days',fg='white',bg='black',height=1,font=('bold',10))
+    l3.place(x=40,y=180)
+b=Button(window,text='Find Age',command=age,bg='black',fg='white')
+b.place(x=130,y=110)
+window.mainloop()
